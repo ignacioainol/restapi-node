@@ -36,6 +36,20 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req,res) => {
     const { id } = req.params;
+    const { title, director, year, rating} = req.body;
+    if(title && director && year && rating){
+        _.each(movies, (movie,i) => {
+            if(movie.id == id){
+                movie.title = title;
+                movie.director = director;
+                movie.year = year;
+                movie.rating = rating;
+            }
+        })
+        res.json(movies);
+    }else{
+        res.status(500).json({"error": "Tan solo dejame estar un momento a solas (8) "});
+    }
 });
 
 module.exports = router;
